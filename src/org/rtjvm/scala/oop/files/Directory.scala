@@ -1,5 +1,7 @@
 package org.rtjvm.scala.oop.files
 
+import org.rtjvm.scala.oop.filesystem.FileSystemException
+
 class Directory(override val parentPath: String,
                 override val name: String,
                 val contents: List[DirEntry])
@@ -31,6 +33,8 @@ class Directory(override val parentPath: String,
     new Directory(parentPath, name, contents.filter(e => !e.name.equals(entryName)) :+ newEntry)
 
   override def asDirectory: Directory = this
+
+  override def asFile: File = throw new FileSystemException("A directory cannot be converted to a File.")
 
   override def getType: String = "Directory"
 }
